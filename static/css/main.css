@@ -1,0 +1,470 @@
+:root {
+    /* --main-color: #f2f2f7; */
+    --main-color: #f7f7fa;
+    --main-color-tr : rgb(242 242 242 / 50%);
+    --main-color-sb: #323236;
+    --button-color-tr-light: #c8c6cc;
+    /* --button-color-tr: rgba(18, 18, 18, 0.6); */
+    --button-color-tr: rgba(255, 255, 255, .75);
+    --button-color: #272c36;
+    --second-color: #828798;
+    --green-active: #21a440 ;
+    --grey-hover : #494949 ;
+  }
+body {
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
+    color: white;
+    box-sizing: border-box;
+}
+
+/* Style du header */
+header {
+    height: 44px;
+    background-color: var(--main-color-tr);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 400;
+    align-content: center;
+    /* padding-right: 10px;
+    padding-left: 10px; */
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    user-select: none;
+    width: 100%;
+
+}
+
+/* Style de la carte pour prendre en compte le header */
+#map {
+    height: calc(100vh - 44px);
+    width: 100%;
+}
+
+/* Style de la bordure autour de l'icône */
+.phone-icon {
+    height: 60px;
+    width: 60px;
+    border: 4px solid white;  /* Couleur de la bordure */
+    border-radius: 15px ;   /* Bordure arrondie */
+    padding: 5px;  /* Espacement autour de l'image */
+    /* background-color: #f9f9f8;  Fond blanc autour de l'icône */
+    background: linear-gradient(0deg, rgba(246,246,246,1) 0%, rgba(254,254,254,1) 100%);
+    box-shadow: rgba(0, 0, 0, 0.2) 0px 0px 20px 0px;
+}
+
+/* .phone-icon::after {
+    content: ""; /* Flèche Unicode 
+    position: absolute;
+    bottom: -40%;
+    left: calc(50% - 10px);
+    height: 0px;
+    width: 0px;
+    border-width: 10px;
+    border-style: solid;
+    border-color: var(--green-active) transparent transparent transparent;
+    margin-right: 5px; /* Espacement avec le texte 
+} */
+
+/* Style des boutons de zoom personnalisés */
+.leaflet-control-zoom {
+    background-color:var(--button-color-tr);
+    border-radius: 25px;
+    padding: 1px;
+    display: flex;
+    flex-direction: row-reverse;
+    bottom: 20px;
+    right: 60px;
+}
+
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
+    font-size: 15px;
+    width: 1px;
+    height: 1px;
+    text-align: center;
+    line-height: 0;
+
+}
+
+.leaflet-touch .leaflet-bar a {
+    width: 22px;
+    height: 22px;
+    border: 0;
+    line-height: 20px;
+    color: var(--second-color);
+    font-size: 15px;
+    
+}
+.leaflet-touch .leaflet-bar {
+    border: 1px solid #ececec;
+    
+}
+
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out {
+    font-size: 10px;
+}
+
+.leaflet-touch .leaflet-control-zoom-in, .leaflet-touch .leaflet-control-zoom-out {
+    background-color: transparent;
+    font-size: 10px;
+    border-radius: 40%;
+}
+
+.leaflet-control-attribution, .leaflet-control-scale-line {
+    display: none;
+}
+
+
+
+.leaflet-bar a:hover, .leaflet-bar a:focus {
+    background-color: transparent;
+    color: black;
+}
+
+/* boussel---------------------------------------------- */
+
+/* Style du div personnalisé */
+.custom-div {
+    background:var(--button-color-tr);
+    color:var(--second-color);
+    border-radius: 50%;
+    font-size: 14px;
+    text-align: center;
+    width: 48px;
+    height: 48px;
+    align-content: center;
+    background-image: url("../img/boussolelight.png");
+    background-position: center;
+    background-size: cover;
+    opacity: 0.9;
+    cursor: grab;
+    position: absolute;
+    bottom: 20px;
+}
+
+.custom-div:hover {
+    opacity: 1;
+    color: black;
+}
+
+/* Positionner le div en bas à gauche */
+.leaflet-top.leaflet-left .custom-control {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+/* icloud log ------------------------------------------------- */
+
+.logo {
+    display:flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+}
+
+.apple-icloud-logo, .square-grid, .person-crop-circle {
+    fill: black;
+    cursor: pointer;
+}
+
+.square-grid, .person-crop-circle {
+    padding: 6px;
+    border-radius: 8px;
+}
+
+
+
+.square-grid:hover, .person-crop-circle:hover {
+    background-color: var(--button-color-tr-light);
+    cursor: pointer;
+    fill: white;
+}
+
+
+.text-local {
+    color:var(--green-active);
+    font-size: 21px;
+    font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    align-content: center;
+    font-weight: 600;
+    /* letter-spacing: 1px; */
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+.user-icloud {
+    height: 24px;
+    width: 24px;
+    padding: 6px;
+    align-self: center;
+    
+}
+
+.watermark {
+    position: absolute;
+    height: 25px;
+    padding: 20px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+/* icone mapp --------------------------------------------- */
+
+.contener-mk {
+    display: flex;
+    position: absolute;
+    right: 0;
+    width: 45px;
+    height: 24px;
+    cursor: pointer;
+    z-index: 1001;
+    background-color: white;
+    border-radius: 8px;
+    margin: 10px;
+    justify-content: center;
+    border: 1px solid #ececec;
+}
+
+.mk-icon {
+    position: absolute;
+    fill: var(--second-color);
+    width: 45px;
+    height: 24px;  
+}
+
+.mk-icon:hover {
+    fill: black;
+}
+
+/* popup------------------------------------------------------------------ */
+/* ////////////////////////////////////////////////////////////////////////// */
+
+.popup {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 20000;
+    background-color: white;
+    
+}
+
+.contener-compte {
+    display: flex;
+    background-color: white;
+    height: 80%;
+    width: 100%;
+    margin-left: auto;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    
+}
+
+
+.icon {
+    height: 160px;
+    width: 160px;
+    margin-top: 40px;
+}
+
+.sign-in-label{
+    /* font-family: SF Pro Display, Helvetica Neue, sans-serif; */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif, sans-serif;
+    font-size: 32px;
+    font-weight: 600;
+    /* text-shadow: 0 0 0px rgba(0, 0, 0, 0.40), 0 0 0px rgba(0, 0, 0, 0.40); */
+    line-height: 36px;
+    color: rgba(0, 0, 0, 0.88);
+    -webkit-margin-before: 20px;
+    margin-block-start: 20px;
+    text-align: center;
+    margin-left: 80px;
+    margin-right: 80px;
+}
+
+
+
+footer {
+    background-color: #f3f2f6;
+    height: calc(20% - 44px);
+    width: 100%;
+    box-shadow: inset rgb(126 130 157 / 10%) 0px 12px 20px 0px;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+
+/* ///////////////////////////////////FORM/////////////////////////////////////////// */
+
+
+form {
+    margin: 40px ;
+    width: 80%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.input-container {
+    position: relative;
+    width: 280px;
+}
+
+.custom-label {
+    position: absolute;
+    left: -12px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: gray;
+    transition: all 0.3s ease;
+    pointer-events: none;
+}
+
+.custom-input {
+    width: 100%;
+    height: 32px;
+    margin-left: 14px;
+    padding: 20px 40px 2px 14px;
+    border-style: solid;
+    border-color: var(--second-color);
+    border-width: 1px;
+    outline: none;
+    font-size: 18px;
+    background: transparent;
+    color: var(--grey-hover);
+    transform: translateX(-40px);
+}
+
+.radius-haut {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.radius-bas {
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.custom-input:focus + .custom-label,
+.custom-input:not(:placeholder-shown) + .custom-label {
+    top: 15px;
+    font-size: 13px;
+    color: var(--second-color);
+}
+
+.custom-input:focus {
+    border: 2px solid #0071e3;
+}
+
+
+
+.connecter-btn {
+    position: absolute;
+    right: -6%;
+    top: 65%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background: transparent;
+}
+
+.arrow-icon {
+    height: 28px;
+    width: 28px;
+    opacity: 0.6;
+}
+
+.arrow-icon:hover {
+    opacity: 0.8;
+}
+
+.check{
+    display: flex;
+    margin: 24px;
+}
+
+.checkbox {
+    border-radius: .1764705882rem;
+    border-style: solid;
+    border-width: 1px;
+    cursor: pointer;
+    left: 0;
+    display: inline-block;
+    height: .8235294118rem;
+    position: absolute;
+    top: .1176470588rem;
+    width: .8235294118rem;
+}
+
+.form-label{
+    display: inline-block;
+    position: relative;
+    padding-left: 8px;
+    font-size: 17px;
+    line-height: 1.23536;
+    font-weight: 400;
+    /* letter-spacing: -.022em; */
+    font-family: SF Pro Text, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+    color: var(--grey-hover);
+}
+
+.bottom-link{
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.link:link, .link:visited, a:link, a:visited {
+    text-decoration: none;
+}
+
+.link {
+    color: #0071e3;
+    font-size: 14px;
+    line-height: 1.42859;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-family: SF Pro Text, SF Pro Icons, Helvetica Neue, Helvetica, Arial, sans-serif;
+    padding-bottom: 28px;
+}
+
+#iforgot-link:hover {
+    text-decoration: underline;
+}
+
+.footer-text {
+    padding: 44px;
+    font-family: SF Pro Text, Helvetica Neue, sans-serif;
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.56);
+    line-height: 20px;
+}
+
+.separator{
+    border: 0px;
+    border-left: 1px;
+    border-right: 1px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.30);
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-left: 8px;
+}
