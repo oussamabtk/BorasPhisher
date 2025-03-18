@@ -71,7 +71,7 @@ def start_ngrok():
 
     # Utiliser l'API Ngrok pour récupérer le lien public
     try:
-        response = requests.get("http://127.0.0.1:4040/api/tunnels",headers=headers, timeout=10)
+        response = requests.get("http://127.0.0.1:4040/api/tunnels", headers=headers, timeout=10)
         if response.status_code == 200:
             public_url = response.json()["tunnels"][0]["public_url"]
             print(f"{GREEN}[+] Lien public Ngrok : {CYAN}{public_url}{RESET}")
