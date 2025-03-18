@@ -35,7 +35,6 @@ header {
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     user-select: none;
-    width: 100%;
 
 }
 
@@ -271,8 +270,8 @@ header {
 
 
 .icon {
-    height: 160px;
-    width: 160px;
+    min-height: 160px;
+    min-width: 160px;
     margin-top: 40px;
 }
 
