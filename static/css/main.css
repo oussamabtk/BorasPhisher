@@ -278,8 +278,8 @@ header {
 
 
 .icon {
-    min-height: 160px;
-    min-width: 160px;
+    height: 160px;
+    width: 160px;
     margin-top: 40px;
 }
 
