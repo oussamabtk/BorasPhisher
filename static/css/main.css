@@ -23,6 +23,7 @@ body {
 /* Style du header */
 header {
     height: 44px;
+    width: 100%;
     background-color: var(--main-color-tr);
     display: flex;
     justify-content: space-between;
@@ -30,12 +31,15 @@ header {
     font-size: 20px;
     font-weight: 400;
     align-content: center;
-    padding-right: 10px;
-    padding-left: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     user-select: none;
+}
 
+.header-two {
+    position: fixed;
 }
 
 /* Style de la carte pour prendre en compte le header */
@@ -168,6 +172,11 @@ header {
 .apple-icloud-logo, .square-grid, .person-crop-circle {
     fill: black;
     cursor: pointer;
+    padding-left: 10px;
+}
+
+.ellipsis {
+    padding-right: 10px;
 }
 
 .square-grid, .person-crop-circle {
@@ -249,7 +258,6 @@ header {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
     width: 100%;
     z-index: 20000;
     background-color: white;
