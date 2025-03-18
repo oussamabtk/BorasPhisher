@@ -30,8 +30,8 @@ header {
     font-size: 20px;
     font-weight: 400;
     align-content: center;
-    /* padding-right: 10px;
-    padding-left: 10px; */
+    padding-right: 10px;
+    padding-left: 10px;
     -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     user-select: none;
