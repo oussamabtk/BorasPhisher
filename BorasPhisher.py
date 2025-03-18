@@ -139,8 +139,6 @@ def main():
     display_banner()
     # Démarrer Ngrok et obtenir le lien public
     public_url = start_ngrok()
-    # Démarrer le serveur Flask
-    start_flask()
 
     if public_url:
         # Afficher le lien public
@@ -160,7 +158,9 @@ def main():
 
         # Afficher le lien public masked
         print(f"{GREEN}[+] Votre lien raccourcir est accessible à l'adresse : {CYAN}{masked_url}{RESET}")
-     
+
+        # Démarrer le serveur Flask
+        start_flask()
     else:
         print(f"{RED}[!] Impossible de démarrer Ngrok. Vérifiez votre configuration.{RESET}")
 
